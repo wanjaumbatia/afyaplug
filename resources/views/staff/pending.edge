@@ -1,0 +1,83 @@
+@layout('layouts/main')
+@set('title', 'Pending Requests')
+@set('bread_title', 'Nurse Management')
+@set('heading', 'Pending Requests')
+@section('body')
+<div class="row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Name
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Phone Number
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    County
+                                </th>
+
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Service
+                                </th>
+                                <th
+                                    class="text-center text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Status</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(item in staff)
+                            <tr>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.name}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.phone}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.county.name}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.service.name}}
+                                    </p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(item.status=='Open')
+                                    <span class="badge badge-sm bg-gradient-secondary">Open</span>
+                                    @elseif(item.status=='Pending')
+                                    <span class="badge badge-sm bg-gradient-warning">Pending</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td class="align-middle">
+                                    <a href="#" class="mx-1 text-secondary font-weight-bold text-xs"
+                                        data-toggle="tooltip" data-original-title="view profile">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

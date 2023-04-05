@@ -1,0 +1,68 @@
+@layout('layouts/main')
+@set('title', 'Counties')
+@set('bread_title', 'Set Up')
+@set('heading', 'Counties')
+@section('body')
+<div class="row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Code
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Name
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Enabled</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Created On</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each (item in counties)
+                            <tr>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        {{item.code}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        {{item.name}}
+                                    </p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(item.enabled==1)
+                                    <span class="badge badge-sm bg-gradient-success">Enabled</span>
+                                    @elseif(item.enabled==0)
+                                    <span class="badge badge-sm bg-gradient-danger">Disabled</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{item.createdAt}}</span>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="/edit" class="text-secondary font-weight-bold text-xs"
+                                        data-toggle="tooltip" data-original-title="Edit user">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

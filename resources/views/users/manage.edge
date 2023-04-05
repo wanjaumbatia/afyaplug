@@ -1,0 +1,109 @@
+@layout('layouts/main')
+@set('title', 'Users')
+@set('bread_title', 'User Management')
+@set('heading', 'Users')
+@section('body')
+<div class="row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    User
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Role
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Verified</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Enabled</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Locked</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Created On</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each (user in users)
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{user.name}}
+                                                @if (user.id === auth.user?.id)
+                                                (you)
+                                                @endif
+                                            </h6>
+                                            <p class="text-xs text-secondary mb-0">{{user.email}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        @if(user.roleId==1)
+                                        Admin
+                                        @elseif(user.roleId==2)
+                                        Customer
+                                        @elseif(user.roleId==3)
+                                        Staff
+                                        @endif
+                                    </p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(user.isEmailVerified==1)
+                                    <span class="badge badge-sm bg-gradient-success">Verified</span>
+                                    @elseif(user.isEmailVerified==0)
+                                    <span class="badge badge-sm bg-gradient-secondary">Unverified</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(user.enabled==1)
+                                    <span class="badge badge-sm bg-gradient-success">Enabled</span>
+                                    @elseif(user.enabled==0)
+                                    <span class="badge badge-sm bg-gradient-danger">Disabled</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(user.locked==1)
+                                    <span class="badge badge-sm bg-gradient-danger">Locked</span>
+                                    @elseif(user.locked==0)
+                                    <span class="badge badge-sm bg-gradient-success">Active</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{user.createdAt}}</span>
+                                </td>
+                                <td class="align-middle">
+                                    @if(user.roleId==3)
+                                    <a href="{{route('users.profile', {id:user.id})}}" class="mx-1"
+                                        data-toggle="tooltip" data-original-title="Edit user">
+                                        <span class="badge badge-sm bg-gradient-secondary">Profile</span>
+                                    </a>
+                                    @endif
+                                    <a href="/edit" class="mx-1 text-secondary font-weight-bold text-xs"
+                                        data-toggle="tooltip" data-original-title="Edit user">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

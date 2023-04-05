@@ -1,0 +1,258 @@
+@layout('layouts/main')
+@set('title', 'Edit Profile')
+@set('bread_title', 'User Management')
+@set('heading', 'Edit Profile')
+@section('body')
+<div class="page-header min-height-100 border-radius-xl mt-4"
+    style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+    <span class="mask  bg-gradient-primary  opacity-6"></span>
+</div>
+<div class="card card-body mx-3 mx-md-4 mt-n6">
+    <div class="row gx-4 mb-2">
+        <div class="col-auto">
+            <div class="avatar avatar-xl position-relative">
+                <img src="../../../../assets/img/bruce-mars.jpg" alt="profile_image"
+                    class="w-100 border-radius-lg shadow-sm">
+            </div>
+        </div>
+        <div class="col-auto my-auto">
+            <div class="h-100">
+                <h5 class="mb-1">
+                    {{user.name}}
+                </h5>
+                <p class="mb-0 font-weight-normal text-sm">
+                    {{user.email}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="col-12 col-xl-12">
+                <div class="card card-plain h-100">
+                    <div class="card-body p-3">
+                        @if(profile.page1==0)
+                        <form method="POST" action="{{route('users.saveProfileDraft', {id: user.id})}}" role="form">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <label class="form-label">Bio</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <textarea type="text" name="bio" class="form-control"
+                                            rows="4">{{profile.bio}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" disabled class="form-control" value="{{profile.phone}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">Gender</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <select type="text" name="gender" class="form-control">
+                                            <option value=""></option>
+                                            <option {{profile.gender=='Male' ? 'selected' :''}} value="Male">Male
+                                            </option>
+                                            <option {{profile.gender=='Female' ? 'selected' :''}} value="Female">Female
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <label class="form-label">Address</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <textarea type="text" name="address"
+                                            class="form-control">{{profile.address}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">City</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input value="{{profile.city}}" type="text" name="city" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">County</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <select type="text" name="county" class="form-control">
+                                            <option value=""></option>
+                                            @each(item in counties)
+                                            <option {{profile.countyId==item.id ? 'selected' :''}} value="{{item.id}}">
+                                                {{item.name}}</option>
+                                            @endeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">ID Number</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="number" value="{{profile.id_number}}" name="id_number"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">License Number</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" value="{{profile.license_number}}" name="license_number"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">Service Type</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <select type="text" name="service" class="form-control">
+                                            <option value=""></option>
+                                            @each(item in services)
+                                            <option {{profile.serviceId==item.id ? 'selected' :''}} value="{{item.id}}">
+                                                {{item.name}}</option>
+                                            @endeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label for=""></label>
+                                    <div class="input-group input-group-outline mb-3 mt-1">
+                                        <button id="submitData" type="submit"
+                                            class="btn bg-gradient-primary w-100">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @endif
+                        @if(profile.page1==1 && profile.page2==0)
+                        <h5>Work Experience</h5>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <form action="{{route('users.addExperience', {id: profile.id})}}" method="POST">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">Company Name / Hospital Name</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <input type="text" name="company" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">From</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <input type="date" name="from" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">To</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <input type="date" name="to" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">Description</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <textarea type="text" name="description" class="form-control"
+                                                    rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12">
+                                            <button type="submit" class="btn btn-outline-primary w-100">Add</button>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6"></div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <ul class="list-group">
+                                    @each(item in experience)
+                                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="mb-3 text-sm">{{item.company}}</h6>
+                                            <span class="mb-2 text-xs">From: <span
+                                                    class="text-dark font-weight-bold ms-sm-2">{{new
+                                                    Date(item.from).getDate()}}/{{new Date(item.from).getMonth()}}/{{new
+                                                    Date(item.from).getFullYear()}}</span></span>
+                                            <span class="mb-2 text-xs">To: <span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{new
+                                                    Date(item.to).getDate()}}/{{new Date(item.to).getMonth()}}/{{new
+                                                    Date(item.to).getFullYear()}}</span></span>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                                href="{{route('users.deleteExperience', {id: item.id})}}"><i
+                                                    class="material-icons text-sm me-2">delete</i>Delete</a>
+                                        </div>
+                                    </li>
+                                    @endeach
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <a href="{{route('users.completeExperience', {id: user.id})}}"
+                                    class="btn bg-gradient-primary w-100">Submit</a>
+                            </div>
+                        </div>
+                        @endif
+                        @if(profile.page1==1 && profile.page2==1 && profile.page3 == 0)
+                        <h5>Certificates</h5>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <form action="{{route('users.addCert', {id: profile.id})}}" method="POST">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">Certificate Name</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <input type="text" name="name" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12">
+                                            <label class="form-label">Issue Date</label>
+                                            <div class="input-group input-group-outline mb-3">
+                                                <input type="date" name="issueDate" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12">
+                                            <button type="submit" class="btn btn-outline-primary w-100">Add</button>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6"></div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <ul class="list-group">
+                                    @each(item in certs)
+                                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="mb-3 text-sm">{{item.name}}</h6>
+                                            <span class="mb-2 text-xs">Issue Date: <span
+                                                    class="text-dark font-weight-bold ms-sm-2">{{new
+                                                    Date(item.issueDate).getDate()}}/{{new
+                                                    Date(item.issueDate).getMonth()}}/{{new
+                                                    Date(item.issueDate).getFullYear()}}</span></span>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                                href="{{route('users.deleteCert', {id: item.id})}}"><i
+                                                    class="material-icons text-sm me-2">delete</i>Delete</a>
+                                        </div>
+                                    </li>
+                                    @endeach
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <a href="{{route('users.completeCert', {id: user.id})}}"
+                                    class="btn bg-gradient-primary w-100">Submit</a>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

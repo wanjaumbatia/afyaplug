@@ -1,0 +1,110 @@
+@layout('layouts/main')
+@set('title', 'Nurses')
+@set('bread_title', 'Nurse Management')
+@set('heading', 'Nurses')
+@section('body')
+<div class="row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Name
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Phone Number
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    County
+                                </th>
+
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Service
+                                </th>
+
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Available
+                                </th>
+                                <th
+                                    class="text-center text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Hire Date</th>
+                                <th
+                                    class="text-center text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Status</th>
+                                <th
+                                    class="text-center text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Enabled</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(item in staff)
+                            <tr>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.name}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.phone}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.county.name}}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.service.name}}
+                                    </p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(item.available==1)
+                                    <span class="badge badge-sm bg-gradient-success">Online</span>
+                                    @elseif(item.available==0)
+                                    <span class="badge badge-sm bg-gradient-danger">Offline</span>
+                                    @else
+                                    @endif
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        @if(item.hireDate!=null)
+                                        {{item.hireDate}}
+                                        @endif
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                                        {{item.status}}
+                                    </p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if(item.enabled==1)
+                                    <span class="badge badge-sm bg-gradient-success">Enabled</span>
+                                    @elseif(item.enabled==0)
+                                    <span class="badge badge-sm bg-gradient-danger">Disabled</span>
+                                    @else
+                                    @endif
+                                </td>
+                            </tr>
+                            @else
+
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

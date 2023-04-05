@@ -1,0 +1,38 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Schema_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Lucid/Schema"));
+const Roles_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Enums/Roles"));
+class default_1 extends Schema_1.default {
+    constructor() {
+        super(...arguments);
+        this.tableName = 'roles';
+    }
+    async up() {
+        this.schema.createTable(this.tableName, (table) => {
+            table.increments('id');
+            table.string('name', 50).notNullable();
+            table.timestamp('created_at', { useTz: true });
+            table.timestamp('updated_at', { useTz: true }).nullable();
+        });
+        this.defer(async (db) => {
+            await db.table(this.tableName).multiInsert([{
+                    id: Roles_1.default.USER,
+                    name: 'User'
+                }, {
+                    id: Roles_1.default.ADMIN,
+                    name: 'Admin'
+                }, {
+                    id: Roles_1.default.STAFF,
+                    name: 'Staff'
+                }]);
+        });
+    }
+    async down() {
+        this.schema.dropTable(this.tableName);
+    }
+}
+exports.default = default_1;
+//# sourceMappingURL=1680317487768_roles.js.map

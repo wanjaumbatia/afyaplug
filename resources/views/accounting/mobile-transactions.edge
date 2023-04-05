@@ -1,0 +1,86 @@
+@layout('layouts/main')
+@set('title', 'Mobie Transactions')
+@set('bread_title','Accounting')
+@set('heading', 'Mobile Transactions')
+@section('body')
+<div class="row">
+  <div class="col-12">
+    <div class="card my-4">
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Date
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Txn Code
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Sender Name
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Account Number
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Phone Number
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Amount
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Posted</th>
+              </tr>
+            </thead>
+            <tbody>
+              @each(item in transactions)
+              <tr>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.transactionDate}}
+                  </p>
+                </td>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.reference}}
+                  </p>
+                </td>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.senderName}}
+                  </p>
+                </td>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.accountNumber}}
+                  </p>
+                </td>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.phone}}
+                  </p>
+                </td>
+                <td>
+                  <p class="align-middle text-center text-xs font-weight-bold mb-0">
+                    {{item.amount}}
+                  </p>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  @if(item.posted==1)
+                  <span class="badge badge-sm bg-gradient-success">Posted</span>
+                  @elseif(item.posted==0)
+                  <span class="badge badge-sm bg-gradient-danger">UnPosted</span>
+                  @else
+                  @endif
+                </td>
+              </tr>
+              @endeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
